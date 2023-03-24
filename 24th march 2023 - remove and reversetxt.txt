@@ -1,0 +1,60 @@
+class Solution {
+  public:
+    string removeReverse(string S) {
+        // code here
+        int n=S.size();
+        
+        unordered_map<char,int>freq;
+        for(int i=0;i<=n;i++)   //traversing string
+        {
+            freq[S[i]]++;
+        }
+        
+        int st=0;
+        int end =n-1;
+        int dir =0;
+        
+        while(st<=end){
+            if(dir==0)     //traverse from front side
+            {
+                if(freq[S[st]]==1)   //No repeataion
+                {
+                    st++;  //increase  start
+                }
+                else          //reverse the direction
+                {
+                    freq[S[st]]--;
+                    S[st]='@';
+                    st++;   //increase start
+                    dir=1;
+                }
+                
+            }
+            else         //traverse from end
+            {
+                if(freq[S[end]]==1){
+                    end--;
+                }
+                else{
+                    freq[S[end]]--;
+                    S[end]='@';
+                    end--;
+                    dir=0;
+                }
+            }
+        }
+        
+        string ans;
+        for(int i=0;i<n;i++){
+            if(S[i]!='@'){
+                ans.push_back(S[i]);
+            }
+        }
+        
+        if(dir==1){
+            reverse(ans.begin(),ans.end());
+        }
+        
+        return ans;
+    }
+};
